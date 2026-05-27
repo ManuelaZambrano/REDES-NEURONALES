@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuestionario interactivo - Redes Neuronales</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      color: #222;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
+    }
+
+    .score-box, .final-box {
+      background: #111827;
+      color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .final-box {
+      display: none;
+      background: #065f46;
+    }
+
+    .question {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .question h3 {
+      margin-top: 0;
+      color: #111827;
+    }
+
+    .option {
+      display: block;
+      margin: 10px 0;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #f9fafb;
+    }
+
+    .option:hover {
+      background: #eef2ff;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .finish {
+      background: #16a34a;
+      font-size: 1rem;
+    }
+
+    .finish:hover {
+      background: #15803d;
+    }
+
+    .reset {
+      background: #6b7280;
+      margin-left: 8px;
+    }
+
+    .reset:hover {
+      background: #4b5563;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+      font-weight: bold;
+    }
+
+    .correct {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .incorrect {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .formula {
+      background: #f3f4f6;
+      padding: 10px;
+      border-radius: 8px;
+      font-family: "Courier New", monospace;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Cuestionario interactivo de Redes Neuronales</h1>
+  <p>Elige una respuesta. Al final pulsa “Ver puntuación final”.</p>
+</header>
+
+<main>
+  <div class="score-box">
+    Preguntas respondidas: <span id="answered">0</span> / <span id="total">30</span>
+    <br />
+    <button class="finish" onclick="verPuntuacionFinal()">Ver puntuación final</button>
+    <button class="reset" onclick="reiniciar()">Reiniciar cuestionario</button>
+  </div>
+
+  <div id="finalBox" class="final-box"></div>
+
+  <div id="quiz"></div>
+</main>
+
+<script>
+const preguntas = [
+  {
+    texto: "¿Cuál es el objetivo principal de una red neuronal?",
+    opciones: ["Ordenar bases de datos", "Aproximar funciones y aprender patrones", "Dibujar gráficos automáticamente", "Resolver únicamente ecuaciones lineales"],
+    correcta: 1
+  },
+  {
+    texto: "En una neurona artificial, los pesos representan:",
+    opciones: ["La salida final", "La importancia de cada entrada", "El número de capas", "El error de entrenamiento"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué realiza principalmente la función de activación?",
+    opciones: ["Elimina los datos", "Introduce no linealidad", "Reduce el tamaño del dataset", "Calcula derivadas automáticamente"],
+    correcta: 1
+  },
+  {
+    texto: "Si una red no tuviera funciones de activación:",
+    opciones: ["Sería equivalente a un modelo lineal", "Aprendería más rápido", "Resolvería cualquier problema", "No necesitaría entrenamiento"],
+    correcta: 0
+  },
+  {
+    texto: "La expresión matemática básica de una neurona es:",
+    formula: "z = Σ wᵢxᵢ + b",
+    opciones: ["x + y = z", "w + x = b", "z = Σ wᵢxᵢ + b", "z = x² + w²"],
+    correcta: 2
+  },
+  {
+    texto: "¿Qué ocurre si todos los pesos se inicializan con el mismo valor?",
+    opciones: ["La red aprende más rápido", "Todas las neuronas aprenden igual", "El gradiente desaparece automáticamente", "El overfitting desaparece"],
+    correcta: 1
+  },
+  {
+    texto: "¿Cuál de estas funciones de activación devuelve valores entre 0 y 1?",
+    opciones: ["ReLU", "tanh", "Sigmoide", "Leaky ReLU"],
+    correcta: 2
+  },
+  {
+    texto: "¿Qué problema aparece frecuentemente con la sigmoide en redes profundas?",
+    opciones: ["Exploding gradients", "Vanishing gradients", "Overfitting inmediato", "Falta de derivabilidad"],
+    correcta: 1
+  },
+  {
+    texto: "La función ReLU se define como:",
+    formula: "f(x) = max(0, x)",
+    opciones: ["f(x)=x²", "f(x)=1/(1+e⁻ˣ)", "f(x)=max(0,x)", "f(x)=|x|"],
+    correcta: 2
+  },
+  {
+    texto: "¿Qué ventaja principal tiene ReLU?",
+    opciones: ["Reduce el número de datos", "Facilita el entrenamiento profundo", "Elimina completamente el overfitting", "Hace innecesario el backpropagation"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué significa “deep” en deep learning?",
+    opciones: ["Muchas salidas", "Muchas funciones de pérdida", "Muchas capas ocultas", "Muchos datasets"],
+    correcta: 2
+  },
+  {
+    texto: "¿Qué proceso calcula la salida de la red?",
+    opciones: ["Backpropagation", "Descenso por gradiente", "Forward propagation", "Regularización"],
+    correcta: 2
+  },
+  {
+    texto: "La función de pérdida sirve para:",
+    opciones: ["Medir el error del modelo", "Reducir el número de neuronas", "Aumentar el dataset", "Inicializar pesos"],
+    correcta: 0
+  },
+  {
+    texto: "El descenso por gradiente busca:",
+    opciones: ["Maximizar el error", "Minimizar la función de pérdida", "Eliminar derivadas", "Aumentar la complejidad"],
+    correcta: 1
+  },
+  {
+    texto: "El gradiente indica:",
+    opciones: ["La dirección de máximo crecimiento", "El número de neuronas", "La precisión exacta", "El tamaño del dataset"],
+    correcta: 0
+  },
+  {
+    texto: "Si la learning rate es demasiado grande:",
+    opciones: ["El entrenamiento puede divergir", "La red no aprende nunca", "El modelo memoriza automáticamente", "La derivada desaparece"],
+    correcta: 0
+  },
+  {
+    texto: "¿Qué técnica utiliza derivadas parciales y regla de la cadena?",
+    opciones: ["Dropout", "PCA", "Backpropagation", "Clustering"],
+    correcta: 2
+  },
+  {
+    texto: "En la actualización w_nuevo = w_viejo - η ∂L/∂w, ¿qué representa η?",
+    formula: "w_nuevo = w_viejo - η ∂L/∂w",
+    opciones: ["El bias", "La learning rate", "La activación", "El gradiente"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué describe mejor el overfitting?",
+    opciones: ["El modelo aprende demasiado bien entrenamiento y falla en test", "El modelo nunca aprende", "El modelo tiene pocos parámetros", "El error de entrenamiento siempre aumenta"],
+    correcta: 0
+  },
+  {
+    texto: "¿Cuál ayuda a reducir overfitting?",
+    opciones: ["Dropout", "Aumentar el ruido sin control", "Eliminar validación", "Inicializar pesos a cero"],
+    correcta: 0
+  },
+  {
+    texto: "Dropout consiste en:",
+    opciones: ["Eliminar permanentemente neuronas", "Desactivar neuronas aleatoriamente durante entrenamiento", "Eliminar capas ocultas", "Reducir el tamaño del dataset"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué significa generalización?",
+    opciones: ["Memorizar datos", "Funcionar bien con datos nuevos", "Aumentar el número de capas", "Reducir derivadas"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué hardware impulsó el deep learning moderno?",
+    opciones: ["CPUs antiguas", "GPUs", "Discos duros SSD", "Routers"],
+    correcta: 1
+  },
+  {
+    texto: "Matemáticamente, una red neuronal puede verse como:",
+    opciones: ["Una única recta", "Una composición de funciones", "Un algoritmo sin álgebra", "Un sistema no matemático"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué rama matemática es especialmente importante en deep learning?",
+    opciones: ["Topología algebraica únicamente", "Álgebra lineal", "Geometría euclídea clásica exclusivamente", "Teoría de números elemental"],
+    correcta: 1
+  },
+  {
+    texto: "Si x=(1,2), w=(3,4) y b=1, ¿cuál es el valor de z?",
+    formula: "z = 3·1 + 4·2 + 1 = 12",
+    opciones: ["8", "10", "12", "14"],
+    correcta: 2
+  },
+  {
+    texto: "Si z=-5 y usamos ReLU, ¿cuál es la salida?",
+    opciones: ["-5", "0", "5", "1"],
+    correcta: 1
+  },
+  {
+    texto: "¿Cuál es el valor de la sigmoide en x=0?",
+    opciones: ["0", "1", "0.5", "-0.5"],
+    correcta: 2
+  },
+  {
+    texto: "Si el gradiente vale 0:",
+    opciones: ["Siempre estamos en el mínimo global", "Los pesos dejan de actualizarse temporalmente", "La red explota", "La learning rate aumenta"],
+    correcta: 1
+  },
+  {
+    texto: "Si un modelo tiene muy poco error en entrenamiento y mucho error en test:",
+    opciones: ["Underfitting", "Buen ajuste", "Overfitting", "Normalización"],
+    correcta: 2
+  }
+];
+
+let puntuacion = 0;
+let respondidas = new Set();
+let acertadas = new Set();
+
+document.getElementById("total").textContent = preguntas.length;
+
+const quiz = document.getElementById("quiz");
+
+preguntas.forEach((pregunta, i) => {
+  const div = document.createElement("div");
+  div.className = "question";
+
+  let contenido = `<h3>${i + 1}. ${pregunta.texto}</h3>`;
+
+  if (pregunta.formula) {
+    contenido += `<div class="formula">${pregunta.formula}</div>`;
+  }
+
+  pregunta.opciones.forEach((opcion, j) => {
+    contenido += `
+      <label class="option">
+        <input type="radio" name="pregunta${i}" value="${j}">
+        ${String.fromCharCode(65 + j)}) ${opcion}
+      </label>`;
+  });
+
+  contenido += `
+    <button onclick="comprobar(${i})">Comprobar</button>
+    <div id="feedback${i}" class="feedback"></div>
+  `;
+
+  div.innerHTML = contenido;
+  quiz.appendChild(div);
+});
+
+function comprobar(i) {
+  const seleccion = document.querySelector(`input[name="pregunta${i}"]:checked`);
+  const feedback = document.getElementById(`feedback${i}`);
+
+  if (!seleccion) {
+    feedback.style.display = "block";
+    feedback.className = "feedback incorrect";
+    feedback.textContent = "Primero tienes que elegir una respuesta.";
+    return;
+  }
+
+  if (respondidas.has(i)) {
+    feedback.style.display = "block";
+    feedback.textContent = "Esta pregunta ya está respondida. Reinicia el cuestionario si quieres volver a intentarlo.";
+    return;
+  }
+
+  const respuestaUsuario = Number(seleccion.value);
+  const correcta = preguntas[i].correcta;
+  const textoCorrecto = preguntas[i].opciones[correcta];
+
+  feedback.style.display = "block";
+  respondidas.add(i);
+
+  if (respuestaUsuario === correcta) {
+    acertadas.add(i);
+    puntuacion++;
+    feedback.className = "feedback correct";
+    feedback.textContent = "¡Correcto!";
+  } else {
+    feedback.className = "feedback incorrect";
+    feedback.textContent = `Incorrecto. La respuesta correcta es: ${String.fromCharCode(65 + correcta)}) ${textoCorrecto}.`;
+  }
+
+  document.getElementById("answered").textContent = respondidas.size;
+
+  const radios = document.querySelectorAll(`input[name="pregunta${i}"]`);
+  radios.forEach(radio => radio.disabled = true);
+}
+
+function verPuntuacionFinal() {
+  const finalBox = document.getElementById("finalBox");
+  const total = preguntas.length;
+  const fallos = respondidas.size - puntuacion;
+  const sinResponder = total - respondidas.size;
+  const porcentaje = ((puntuacion / total) * 100).toFixed(1);
+
+  finalBox.style.display = "block";
+  finalBox.innerHTML = `
+    <h2>Puntuación final</h2>
+    <p><strong>${puntuacion} / ${total}</strong> aciertos</p>
+    <p>Fallos: ${fallos}</p>
+    <p>Sin responder: ${sinResponder}</p>
+    <p>Porcentaje: ${porcentaje}%</p>
+  `;
+
+  finalBox.scrollIntoView({ behavior: "smooth" });
+}
+
+function reiniciar() {
+  puntuacion = 0;
+  respondidas.clear();
+  acertadas.clear();
+
+  document.getElementById("answered").textContent = 0;
+  document.getElementById("finalBox").style.display = "none";
+  document.getElementById("finalBox").innerHTML = "";
+
+  preguntas.forEach((_, i) => {
+    const radios = document.querySelectorAll(`input[name="pregunta${i}"]`);
+    radios.forEach(radio => {
+      radio.checked = false;
+      radio.disabled = false;
+    });
+
+    const feedback = document.getElementById(`feedback${i}`);
+    feedback.style.display = "none";
+    feedback.textContent = "";
+  });
+}
+</script>
+
+</body>
+</html>
