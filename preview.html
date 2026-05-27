@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuestionario tipo test - Redes Neuronales</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
+    }
+
+    .question {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #1f2937;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 8px;
+      margin-top: 35px;
+    }
+
+    .options {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    .options li {
+      margin: 6px 0;
+    }
+
+    details {
+      margin-top: 12px;
+      background: #eef6ff;
+      border-left: 4px solid #2563eb;
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #1d4ed8;
+    }
+
+    .formula {
+      background: #f9fafb;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #e5e7eb;
+      color: #555;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cuestionario tipo test: Redes Neuronales</h1>
+    <p>Matemáticas para Inteligencia Artificial</p>
+  </header>
+
+  <main>
+    <h2>Parte 1. Conceptos básicos</h2>
+
+    <section class="question">
+      <h3>1. ¿Cuál es el objetivo principal de una red neuronal?</h3>
+      <ol class="options" type="A">
+        <li>Ordenar bases de datos.</li>
+        <li>Aproximar funciones y aprender patrones.</li>
+        <li>Dibujar gráficos automáticamente.</li>
+        <li>Resolver únicamente ecuaciones lineales.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>2. En una neurona artificial, los pesos representan:</h3>
+      <ol class="options" type="A">
+        <li>La salida final.</li>
+        <li>La importancia de cada entrada.</li>
+        <li>El número de capas.</li>
+        <li>El error de entrenamiento.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>3. ¿Qué realiza principalmente la función de activación?</h3>
+      <ol class="options" type="A">
+        <li>Elimina los datos.</li>
+        <li>Introduce no linealidad.</li>
+        <li>Reduce el tamaño del dataset.</li>
+        <li>Calcula derivadas automáticamente.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>4. Si una red no tuviera funciones de activación:</h3>
+      <ol class="options" type="A">
+        <li>Sería equivalente a un modelo lineal.</li>
+        <li>Aprendería más rápido.</li>
+        <li>Resolvería cualquier problema.</li>
+        <li>No necesitaría entrenamiento.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
+    </section>
+
+    <section class="question">
+      <h3>5. La expresión matemática básica de una neurona es:</h3>
+      <ol class="options" type="A">
+        <li>x + y = z</li>
+        <li>w + x = b</li>
+        <li>z = Σ wᵢxᵢ + b</li>
+        <li>z = x² + w²</li>
+      </ol>
+      <div class="formula">z = Σ wᵢxᵢ + b</div>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>6. ¿Qué ocurre si todos los pesos se inicializan con el mismo valor?</h3>
+      <ol class="options" type="A">
+        <li>La red aprende más rápido.</li>
+        <li>Todas las neuronas aprenden igual.</li>
+        <li>El gradiente desaparece automáticamente.</li>
+        <li>El overfitting desaparece.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <h2>Parte 2. Funciones de activación</h2>
+
+    <section class="question">
+      <h3>7. ¿Cuál de estas funciones de activación devuelve valores entre 0 y 1?</h3>
+      <ol class="options" type="A">
+        <li>ReLU.</li>
+        <li>tanh.</li>
+        <li>Sigmoide.</li>
+        <li>Leaky ReLU.</li>
+      </ol>
+      <div class="formula">σ(x) = 1 / (1 + e⁻ˣ)</div>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>8. ¿Qué problema aparece frecuentemente con la sigmoide en redes profundas?</h3>
+      <ol class="options" type="A">
+        <li>Exploding gradients.</li>
+        <li>Vanishing gradients.</li>
+        <li>Overfitting inmediato.</li>
+        <li>Falta de derivabilidad.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>9. La función ReLU se define como:</h3>
+      <ol class="options" type="A">
+        <li>f(x) = x²</li>
+        <li>f(x) = 1 / (1 + e⁻ˣ)</li>
+        <li>f(x) = max(0, x)</li>
+        <li>f(x) = |x|</li>
+      </ol>
+      <div class="formula">f(x) = max(0, x)</div>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>10. ¿Qué ventaja principal tiene ReLU?</h3>
+      <ol class="options" type="A">
+        <li>Reduce el número de datos.</li>
+        <li>Facilita el entrenamiento profundo.</li>
+        <li>Elimina completamente el overfitting.</li>
+        <li>Hace innecesario el backpropagation.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <h2>Parte 3. Arquitectura y entrenamiento</h2>
+
+    <section class="question">
+      <h3>11. ¿Qué significa “deep” en deep learning?</h3>
+      <ol class="options" type="A">
+        <li>Muchas salidas.</li>
+        <li>Muchas funciones de pérdida.</li>
+        <li>Muchas capas ocultas.</li>
+        <li>Muchos datasets.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>12. ¿Qué proceso calcula la salida de la red?</h3>
+      <ol class="options" type="A">
+        <li>Backpropagation.</li>
+        <li>Descenso por gradiente.</li>
+        <li>Forward propagation.</li>
+        <li>Regularización.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>13. La función de pérdida sirve para:</h3>
+      <ol class="options" type="A">
+        <li>Medir el error del modelo.</li>
+        <li>Reducir el número de neuronas.</li>
+        <li>Aumentar el dataset.</li>
+        <li>Inicializar pesos.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
+    </section>
+
+    <section class="question">
+      <h3>14. El descenso por gradiente busca:</h3>
+      <ol class="options" type="A">
+        <li>Maximizar el error.</li>
+        <li>Minimizar la función de pérdida.</li>
+        <li>Eliminar derivadas.</li>
+        <li>Aumentar la complejidad.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>15. El gradiente indica:</h3>
+      <ol class="options" type="A">
+        <li>La dirección de máximo crecimiento.</li>
+        <li>El número de neuronas.</li>
+        <li>La precisión exacta.</li>
+        <li>El tamaño del dataset.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
+    </section>
+
+    <section class="question">
+      <h3>16. Si la learning rate es demasiado grande:</h3>
+      <ol class="options" type="A">
+        <li>El entrenamiento puede divergir.</li>
+        <li>La red no aprende nunca.</li>
+        <li>El modelo memoriza automáticamente.</li>
+        <li>La derivada desaparece.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
+    </section>
+
+    <section class="question">
+      <h3>17. ¿Qué técnica utiliza derivadas parciales y regla de la cadena?</h3>
+      <ol class="options" type="A">
+        <li>Dropout.</li>
+        <li>PCA.</li>
+        <li>Backpropagation.</li>
+        <li>Clustering.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>18. La actualización de pesos sigue aproximadamente:</h3>
+      <div class="formula">w_nuevo = w_viejo - η · ∂L/∂w</div>
+      <p>¿Qué representa η?</p>
+      <ol class="options" type="A">
+        <li>El bias.</li>
+        <li>La learning rate.</li>
+        <li>La activación.</li>
+        <li>El gradiente.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <h2>Parte 4. Regularización y generalización</h2>
+
+    <section class="question">
+      <h3>19. ¿Qué describe mejor el overfitting?</h3>
+      <ol class="options" type="A">
+        <li>El modelo aprende demasiado bien entrenamiento y falla en test.</li>
+        <li>El modelo nunca aprende.</li>
+        <li>El modelo tiene pocos parámetros.</li>
+        <li>El error de entrenamiento siempre aumenta.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
+    </section>
+
+    <section class="question">
+      <h3>20. ¿Cuál ayuda a reducir overfitting?</h3>
+      <ol class="options" type="A">
+        <li>Dropout.</li>
+        <li>Aumentar el ruido sin control.</li>
+        <li>Eliminar validación.</li>
+        <li>Inicializar pesos a cero.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
+    </section>
+
+    <section class="question">
+      <h3>21. Dropout consiste en:</h3>
+      <ol class="options" type="A">
+        <li>Eliminar permanentemente neuronas.</li>
+        <li>Desactivar neuronas aleatoriamente durante entrenamiento.</li>
+        <li>Eliminar capas ocultas.</li>
+        <li>Reducir el tamaño del dataset.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>22. ¿Qué significa generalización?</h3>
+      <ol class="options" type="A">
+        <li>Memorizar datos.</li>
+        <li>Funcionar bien con datos nuevos.</li>
+        <li>Aumentar el número de capas.</li>
+        <li>Reducir derivadas.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <h2>Parte 5. Problemas numéricos</h2>
+
+    <section class="question">
+      <h3>23. Si x = (1, 2), w = (3, 4) y b = 1, ¿cuál es el valor de z?</h3>
+      <div class="formula">z = w · x + b = 3·1 + 4·2 + 1</div>
+      <ol class="options" type="A">
+        <li>8</li>
+        <li>10</li>
+        <li>12</li>
+        <li>14</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>24. Si z = -5 y usamos ReLU, la salida es:</h3>
+      <ol class="options" type="A">
+        <li>-5</li>
+        <li>0</li>
+        <li>5</li>
+        <li>1</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>25. ¿Cuál es el valor de la sigmoide en x = 0?</h3>
+      <ol class="options" type="A">
+        <li>0</li>
+        <li>1</li>
+        <li>0.5</li>
+        <li>-0.5</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>26. Si el gradiente vale 0:</h3>
+      <ol class="options" type="A">
+        <li>Siempre estamos en el mínimo global.</li>
+        <li>Los pesos dejan de actualizarse temporalmente.</li>
+        <li>La red explota.</li>
+        <li>La learning rate aumenta.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>27. Si un modelo tiene muy poco error en entrenamiento y mucho error en test:</h3>
+      <ol class="options" type="A">
+        <li>Underfitting.</li>
+        <li>Buen ajuste.</li>
+        <li>Overfitting.</li>
+        <li>Normalización.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
+    </section>
+
+    <section class="question">
+      <h3>28. ¿Qué hardware impulsó el deep learning moderno?</h3>
+      <ol class="options" type="A">
+        <li>CPUs antiguas.</li>
+        <li>GPUs.</li>
+        <li>Discos duros SSD.</li>
+        <li>Routers.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>29. Matemáticamente, una red neuronal puede verse como:</h3>
+      <ol class="options" type="A">
+        <li>Una única recta.</li>
+        <li>Una composición de funciones.</li>
+        <li>Un algoritmo sin álgebra.</li>
+        <li>Un sistema no matemático.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+
+    <section class="question">
+      <h3>30. ¿Qué rama matemática es especialmente importante en deep learning?</h3>
+      <ol class="options" type="A">
+        <li>Topología algebraica únicamente.</li>
+        <li>Álgebra lineal.</li>
+        <li>Geometría euclídea clásica exclusivamente.</li>
+        <li>Teoría de números elemental.</li>
+      </ol>
+      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
+    </section>
+  </main>
+
+  <footer>
+    Cuestionario de estudio - Matemáticas para IA
+  </footer>
+</body>
+</html>
