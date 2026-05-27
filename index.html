@@ -3,446 +3,430 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cuestionario tipo test - Redes Neuronales</title>
+  <title>Cuestionario interactivo - Redes Neuronales</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
       background: #f4f6f8;
+      margin: 0;
       color: #222;
     }
 
     header {
       background: #1f2937;
       color: white;
-      padding: 30px 20px;
       text-align: center;
+      padding: 30px 20px;
     }
 
     main {
-      max-width: 900px;
+      max-width: 950px;
       margin: 30px auto;
       padding: 0 20px 40px;
+    }
+
+    .score-box, .final-box {
+      background: #111827;
+      color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .final-box {
+      display: none;
+      background: #065f46;
     }
 
     .question {
       background: white;
       border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-    h1 {
-      margin-bottom: 10px;
+    .question h3 {
+      margin-top: 0;
+      color: #111827;
     }
 
-    h2 {
-      color: #1f2937;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 8px;
-      margin-top: 35px;
-    }
-
-    .options {
-      margin-top: 10px;
-      padding-left: 20px;
-    }
-
-    .options li {
-      margin: 6px 0;
-    }
-
-    details {
-      margin-top: 12px;
-      background: #eef6ff;
-      border-left: 4px solid #2563eb;
-      padding: 10px 14px;
+    .option {
+      display: block;
+      margin: 10px 0;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
       border-radius: 8px;
+      cursor: pointer;
+      background: #f9fafb;
     }
 
-    summary {
+    .option:hover {
+      background: #eef2ff;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
       cursor: pointer;
       font-weight: bold;
-      color: #1d4ed8;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .finish {
+      background: #16a34a;
+      font-size: 1rem;
+    }
+
+    .finish:hover {
+      background: #15803d;
+    }
+
+    .reset {
+      background: #6b7280;
+      margin-left: 8px;
+    }
+
+    .reset:hover {
+      background: #4b5563;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+      font-weight: bold;
+    }
+
+    .correct {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .incorrect {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
     }
 
     .formula {
-      background: #f9fafb;
-      border: 1px solid #ddd;
+      background: #f3f4f6;
       padding: 10px;
       border-radius: 8px;
-      font-family: 'Courier New', monospace;
+      font-family: "Courier New", monospace;
       margin: 10px 0;
-      overflow-x: auto;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      background: #e5e7eb;
-      color: #555;
-      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Cuestionario tipo test: Redes Neuronales</h1>
-    <p>Matemáticas para Inteligencia Artificial</p>
-  </header>
 
-  <main>
-    <h2>Parte 1. Conceptos básicos</h2>
+<header>
+  <h1>Cuestionario interactivo de Redes Neuronales</h1>
+  <p>Elige una respuesta. Al final pulsa “Ver puntuación final”.</p>
+</header>
 
-    <section class="question">
-      <h3>1. ¿Cuál es el objetivo principal de una red neuronal?</h3>
-      <ol class="options" type="A">
-        <li>Ordenar bases de datos.</li>
-        <li>Aproximar funciones y aprender patrones.</li>
-        <li>Dibujar gráficos automáticamente.</li>
-        <li>Resolver únicamente ecuaciones lineales.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+<main>
+  <div class="score-box">
+    Preguntas respondidas: <span id="answered">0</span> / <span id="total">30</span>
+    <br />
+    <button class="finish" onclick="verPuntuacionFinal()">Ver puntuación final</button>
+    <button class="reset" onclick="reiniciar()">Reiniciar cuestionario</button>
+  </div>
 
-    <section class="question">
-      <h3>2. En una neurona artificial, los pesos representan:</h3>
-      <ol class="options" type="A">
-        <li>La salida final.</li>
-        <li>La importancia de cada entrada.</li>
-        <li>El número de capas.</li>
-        <li>El error de entrenamiento.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+  <div id="finalBox" class="final-box"></div>
 
-    <section class="question">
-      <h3>3. ¿Qué realiza principalmente la función de activación?</h3>
-      <ol class="options" type="A">
-        <li>Elimina los datos.</li>
-        <li>Introduce no linealidad.</li>
-        <li>Reduce el tamaño del dataset.</li>
-        <li>Calcula derivadas automáticamente.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+  <div id="quiz"></div>
+</main>
 
-    <section class="question">
-      <h3>4. Si una red no tuviera funciones de activación:</h3>
-      <ol class="options" type="A">
-        <li>Sería equivalente a un modelo lineal.</li>
-        <li>Aprendería más rápido.</li>
-        <li>Resolvería cualquier problema.</li>
-        <li>No necesitaría entrenamiento.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
-    </section>
+<script>
+const preguntas = [
+  {
+    texto: "¿Cuál es el objetivo principal de una red neuronal?",
+    opciones: ["Ordenar bases de datos", "Aproximar funciones y aprender patrones", "Dibujar gráficos automáticamente", "Resolver únicamente ecuaciones lineales"],
+    correcta: 1
+  },
+  {
+    texto: "En una neurona artificial, los pesos representan:",
+    opciones: ["La salida final", "La importancia de cada entrada", "El número de capas", "El error de entrenamiento"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué realiza principalmente la función de activación?",
+    opciones: ["Elimina los datos", "Introduce no linealidad", "Reduce el tamaño del dataset", "Calcula derivadas automáticamente"],
+    correcta: 1
+  },
+  {
+    texto: "Si una red no tuviera funciones de activación:",
+    opciones: ["Sería equivalente a un modelo lineal", "Aprendería más rápido", "Resolvería cualquier problema", "No necesitaría entrenamiento"],
+    correcta: 0
+  },
+  {
+    texto: "La expresión matemática básica de una neurona es:",
+    formula: "z = Σ wᵢxᵢ + b",
+    opciones: ["x + y = z", "w + x = b", "z = Σ wᵢxᵢ + b", "z = x² + w²"],
+    correcta: 2
+  },
+  {
+    texto: "¿Qué ocurre si todos los pesos se inicializan con el mismo valor?",
+    opciones: ["La red aprende más rápido", "Todas las neuronas aprenden igual", "El gradiente desaparece automáticamente", "El overfitting desaparece"],
+    correcta: 1
+  },
+  {
+    texto: "¿Cuál de estas funciones de activación devuelve valores entre 0 y 1?",
+    opciones: ["ReLU", "tanh", "Sigmoide", "Leaky ReLU"],
+    correcta: 2
+  },
+  {
+    texto: "¿Qué problema aparece frecuentemente con la sigmoide en redes profundas?",
+    opciones: ["Exploding gradients", "Vanishing gradients", "Overfitting inmediato", "Falta de derivabilidad"],
+    correcta: 1
+  },
+  {
+    texto: "La función ReLU se define como:",
+    formula: "f(x) = max(0, x)",
+    opciones: ["f(x)=x²", "f(x)=1/(1+e⁻ˣ)", "f(x)=max(0,x)", "f(x)=|x|"],
+    correcta: 2
+  },
+  {
+    texto: "¿Qué ventaja principal tiene ReLU?",
+    opciones: ["Reduce el número de datos", "Facilita el entrenamiento profundo", "Elimina completamente el overfitting", "Hace innecesario el backpropagation"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué significa “deep” en deep learning?",
+    opciones: ["Muchas salidas", "Muchas funciones de pérdida", "Muchas capas ocultas", "Muchos datasets"],
+    correcta: 2
+  },
+  {
+    texto: "¿Qué proceso calcula la salida de la red?",
+    opciones: ["Backpropagation", "Descenso por gradiente", "Forward propagation", "Regularización"],
+    correcta: 2
+  },
+  {
+    texto: "La función de pérdida sirve para:",
+    opciones: ["Medir el error del modelo", "Reducir el número de neuronas", "Aumentar el dataset", "Inicializar pesos"],
+    correcta: 0
+  },
+  {
+    texto: "El descenso por gradiente busca:",
+    opciones: ["Maximizar el error", "Minimizar la función de pérdida", "Eliminar derivadas", "Aumentar la complejidad"],
+    correcta: 1
+  },
+  {
+    texto: "El gradiente indica:",
+    opciones: ["La dirección de máximo crecimiento", "El número de neuronas", "La precisión exacta", "El tamaño del dataset"],
+    correcta: 0
+  },
+  {
+    texto: "Si la learning rate es demasiado grande:",
+    opciones: ["El entrenamiento puede divergir", "La red no aprende nunca", "El modelo memoriza automáticamente", "La derivada desaparece"],
+    correcta: 0
+  },
+  {
+    texto: "¿Qué técnica utiliza derivadas parciales y regla de la cadena?",
+    opciones: ["Dropout", "PCA", "Backpropagation", "Clustering"],
+    correcta: 2
+  },
+  {
+    texto: "En la actualización w_nuevo = w_viejo - η ∂L/∂w, ¿qué representa η?",
+    formula: "w_nuevo = w_viejo - η ∂L/∂w",
+    opciones: ["El bias", "La learning rate", "La activación", "El gradiente"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué describe mejor el overfitting?",
+    opciones: ["El modelo aprende demasiado bien entrenamiento y falla en test", "El modelo nunca aprende", "El modelo tiene pocos parámetros", "El error de entrenamiento siempre aumenta"],
+    correcta: 0
+  },
+  {
+    texto: "¿Cuál ayuda a reducir overfitting?",
+    opciones: ["Dropout", "Aumentar el ruido sin control", "Eliminar validación", "Inicializar pesos a cero"],
+    correcta: 0
+  },
+  {
+    texto: "Dropout consiste en:",
+    opciones: ["Eliminar permanentemente neuronas", "Desactivar neuronas aleatoriamente durante entrenamiento", "Eliminar capas ocultas", "Reducir el tamaño del dataset"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué significa generalización?",
+    opciones: ["Memorizar datos", "Funcionar bien con datos nuevos", "Aumentar el número de capas", "Reducir derivadas"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué hardware impulsó el deep learning moderno?",
+    opciones: ["CPUs antiguas", "GPUs", "Discos duros SSD", "Routers"],
+    correcta: 1
+  },
+  {
+    texto: "Matemáticamente, una red neuronal puede verse como:",
+    opciones: ["Una única recta", "Una composición de funciones", "Un algoritmo sin álgebra", "Un sistema no matemático"],
+    correcta: 1
+  },
+  {
+    texto: "¿Qué rama matemática es especialmente importante en deep learning?",
+    opciones: ["Topología algebraica únicamente", "Álgebra lineal", "Geometría euclídea clásica exclusivamente", "Teoría de números elemental"],
+    correcta: 1
+  },
+  {
+    texto: "Si x=(1,2), w=(3,4) y b=1, ¿cuál es el valor de z?",
+    formula: "z = 3·1 + 4·2 + 1 = 12",
+    opciones: ["8", "10", "12", "14"],
+    correcta: 2
+  },
+  {
+    texto: "Si z=-5 y usamos ReLU, ¿cuál es la salida?",
+    opciones: ["-5", "0", "5", "1"],
+    correcta: 1
+  },
+  {
+    texto: "¿Cuál es el valor de la sigmoide en x=0?",
+    opciones: ["0", "1", "0.5", "-0.5"],
+    correcta: 2
+  },
+  {
+    texto: "Si el gradiente vale 0:",
+    opciones: ["Siempre estamos en el mínimo global", "Los pesos dejan de actualizarse temporalmente", "La red explota", "La learning rate aumenta"],
+    correcta: 1
+  },
+  {
+    texto: "Si un modelo tiene muy poco error en entrenamiento y mucho error en test:",
+    opciones: ["Underfitting", "Buen ajuste", "Overfitting", "Normalización"],
+    correcta: 2
+  }
+];
 
-    <section class="question">
-      <h3>5. La expresión matemática básica de una neurona es:</h3>
-      <ol class="options" type="A">
-        <li>x + y = z</li>
-        <li>w + x = b</li>
-        <li>z = Σ wᵢxᵢ + b</li>
-        <li>z = x² + w²</li>
-      </ol>
-      <div class="formula">z = Σ wᵢxᵢ + b</div>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
+let puntuacion = 0;
+let respondidas = new Set();
+let acertadas = new Set();
 
-    <section class="question">
-      <h3>6. ¿Qué ocurre si todos los pesos se inicializan con el mismo valor?</h3>
-      <ol class="options" type="A">
-        <li>La red aprende más rápido.</li>
-        <li>Todas las neuronas aprenden igual.</li>
-        <li>El gradiente desaparece automáticamente.</li>
-        <li>El overfitting desaparece.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+document.getElementById("total").textContent = preguntas.length;
 
-    <h2>Parte 2. Funciones de activación</h2>
+const quiz = document.getElementById("quiz");
 
-    <section class="question">
-      <h3>7. ¿Cuál de estas funciones de activación devuelve valores entre 0 y 1?</h3>
-      <ol class="options" type="A">
-        <li>ReLU.</li>
-        <li>tanh.</li>
-        <li>Sigmoide.</li>
-        <li>Leaky ReLU.</li>
-      </ol>
-      <div class="formula">σ(x) = 1 / (1 + e⁻ˣ)</div>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
+preguntas.forEach((pregunta, i) => {
+  const div = document.createElement("div");
+  div.className = "question";
 
-    <section class="question">
-      <h3>8. ¿Qué problema aparece frecuentemente con la sigmoide en redes profundas?</h3>
-      <ol class="options" type="A">
-        <li>Exploding gradients.</li>
-        <li>Vanishing gradients.</li>
-        <li>Overfitting inmediato.</li>
-        <li>Falta de derivabilidad.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+  let contenido = `<h3>${i + 1}. ${pregunta.texto}</h3>`;
 
-    <section class="question">
-      <h3>9. La función ReLU se define como:</h3>
-      <ol class="options" type="A">
-        <li>f(x) = x²</li>
-        <li>f(x) = 1 / (1 + e⁻ˣ)</li>
-        <li>f(x) = max(0, x)</li>
-        <li>f(x) = |x|</li>
-      </ol>
-      <div class="formula">f(x) = max(0, x)</div>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
+  if (pregunta.formula) {
+    contenido += `<div class="formula">${pregunta.formula}</div>`;
+  }
 
-    <section class="question">
-      <h3>10. ¿Qué ventaja principal tiene ReLU?</h3>
-      <ol class="options" type="A">
-        <li>Reduce el número de datos.</li>
-        <li>Facilita el entrenamiento profundo.</li>
-        <li>Elimina completamente el overfitting.</li>
-        <li>Hace innecesario el backpropagation.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+  pregunta.opciones.forEach((opcion, j) => {
+    contenido += `
+      <label class="option">
+        <input type="radio" name="pregunta${i}" value="${j}">
+        ${String.fromCharCode(65 + j)}) ${opcion}
+      </label>`;
+  });
 
-    <h2>Parte 3. Arquitectura y entrenamiento</h2>
+  contenido += `
+    <button onclick="comprobar(${i})">Comprobar</button>
+    <div id="feedback${i}" class="feedback"></div>
+  `;
 
-    <section class="question">
-      <h3>11. ¿Qué significa “deep” en deep learning?</h3>
-      <ol class="options" type="A">
-        <li>Muchas salidas.</li>
-        <li>Muchas funciones de pérdida.</li>
-        <li>Muchas capas ocultas.</li>
-        <li>Muchos datasets.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
+  div.innerHTML = contenido;
+  quiz.appendChild(div);
+});
 
-    <section class="question">
-      <h3>12. ¿Qué proceso calcula la salida de la red?</h3>
-      <ol class="options" type="A">
-        <li>Backpropagation.</li>
-        <li>Descenso por gradiente.</li>
-        <li>Forward propagation.</li>
-        <li>Regularización.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
+function comprobar(i) {
+  const seleccion = document.querySelector(`input[name="pregunta${i}"]:checked`);
+  const feedback = document.getElementById(`feedback${i}`);
 
-    <section class="question">
-      <h3>13. La función de pérdida sirve para:</h3>
-      <ol class="options" type="A">
-        <li>Medir el error del modelo.</li>
-        <li>Reducir el número de neuronas.</li>
-        <li>Aumentar el dataset.</li>
-        <li>Inicializar pesos.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
-    </section>
+  if (!seleccion) {
+    feedback.style.display = "block";
+    feedback.className = "feedback incorrect";
+    feedback.textContent = "Primero tienes que elegir una respuesta.";
+    return;
+  }
 
-    <section class="question">
-      <h3>14. El descenso por gradiente busca:</h3>
-      <ol class="options" type="A">
-        <li>Maximizar el error.</li>
-        <li>Minimizar la función de pérdida.</li>
-        <li>Eliminar derivadas.</li>
-        <li>Aumentar la complejidad.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+  if (respondidas.has(i)) {
+    feedback.style.display = "block";
+    feedback.textContent = "Esta pregunta ya está respondida. Reinicia el cuestionario si quieres volver a intentarlo.";
+    return;
+  }
 
-    <section class="question">
-      <h3>15. El gradiente indica:</h3>
-      <ol class="options" type="A">
-        <li>La dirección de máximo crecimiento.</li>
-        <li>El número de neuronas.</li>
-        <li>La precisión exacta.</li>
-        <li>El tamaño del dataset.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
-    </section>
+  const respuestaUsuario = Number(seleccion.value);
+  const correcta = preguntas[i].correcta;
+  const textoCorrecto = preguntas[i].opciones[correcta];
 
-    <section class="question">
-      <h3>16. Si la learning rate es demasiado grande:</h3>
-      <ol class="options" type="A">
-        <li>El entrenamiento puede divergir.</li>
-        <li>La red no aprende nunca.</li>
-        <li>El modelo memoriza automáticamente.</li>
-        <li>La derivada desaparece.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
-    </section>
+  feedback.style.display = "block";
+  respondidas.add(i);
 
-    <section class="question">
-      <h3>17. ¿Qué técnica utiliza derivadas parciales y regla de la cadena?</h3>
-      <ol class="options" type="A">
-        <li>Dropout.</li>
-        <li>PCA.</li>
-        <li>Backpropagation.</li>
-        <li>Clustering.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
+  if (respuestaUsuario === correcta) {
+    acertadas.add(i);
+    puntuacion++;
+    feedback.className = "feedback correct";
+    feedback.textContent = "¡Correcto!";
+  } else {
+    feedback.className = "feedback incorrect";
+    feedback.textContent = `Incorrecto. La respuesta correcta es: ${String.fromCharCode(65 + correcta)}) ${textoCorrecto}.`;
+  }
 
-    <section class="question">
-      <h3>18. La actualización de pesos sigue aproximadamente:</h3>
-      <div class="formula">w_nuevo = w_viejo - η · ∂L/∂w</div>
-      <p>¿Qué representa η?</p>
-      <ol class="options" type="A">
-        <li>El bias.</li>
-        <li>La learning rate.</li>
-        <li>La activación.</li>
-        <li>El gradiente.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+  document.getElementById("answered").textContent = respondidas.size;
 
-    <h2>Parte 4. Regularización y generalización</h2>
+  const radios = document.querySelectorAll(`input[name="pregunta${i}"]`);
+  radios.forEach(radio => radio.disabled = true);
+}
 
-    <section class="question">
-      <h3>19. ¿Qué describe mejor el overfitting?</h3>
-      <ol class="options" type="A">
-        <li>El modelo aprende demasiado bien entrenamiento y falla en test.</li>
-        <li>El modelo nunca aprende.</li>
-        <li>El modelo tiene pocos parámetros.</li>
-        <li>El error de entrenamiento siempre aumenta.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
-    </section>
+function verPuntuacionFinal() {
+  const finalBox = document.getElementById("finalBox");
+  const total = preguntas.length;
+  const fallos = respondidas.size - puntuacion;
+  const sinResponder = total - respondidas.size;
+  const porcentaje = ((puntuacion / total) * 100).toFixed(1);
 
-    <section class="question">
-      <h3>20. ¿Cuál ayuda a reducir overfitting?</h3>
-      <ol class="options" type="A">
-        <li>Dropout.</li>
-        <li>Aumentar el ruido sin control.</li>
-        <li>Eliminar validación.</li>
-        <li>Inicializar pesos a cero.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> A</p></details>
-    </section>
+  finalBox.style.display = "block";
+  finalBox.innerHTML = `
+    <h2>Puntuación final</h2>
+    <p><strong>${puntuacion} / ${total}</strong> aciertos</p>
+    <p>Fallos: ${fallos}</p>
+    <p>Sin responder: ${sinResponder}</p>
+    <p>Porcentaje: ${porcentaje}%</p>
+  `;
 
-    <section class="question">
-      <h3>21. Dropout consiste en:</h3>
-      <ol class="options" type="A">
-        <li>Eliminar permanentemente neuronas.</li>
-        <li>Desactivar neuronas aleatoriamente durante entrenamiento.</li>
-        <li>Eliminar capas ocultas.</li>
-        <li>Reducir el tamaño del dataset.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+  finalBox.scrollIntoView({ behavior: "smooth" });
+}
 
-    <section class="question">
-      <h3>22. ¿Qué significa generalización?</h3>
-      <ol class="options" type="A">
-        <li>Memorizar datos.</li>
-        <li>Funcionar bien con datos nuevos.</li>
-        <li>Aumentar el número de capas.</li>
-        <li>Reducir derivadas.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+function reiniciar() {
+  puntuacion = 0;
+  respondidas.clear();
+  acertadas.clear();
 
-    <h2>Parte 5. Problemas numéricos</h2>
+  document.getElementById("answered").textContent = 0;
+  document.getElementById("finalBox").style.display = "none";
+  document.getElementById("finalBox").innerHTML = "";
 
-    <section class="question">
-      <h3>23. Si x = (1, 2), w = (3, 4) y b = 1, ¿cuál es el valor de z?</h3>
-      <div class="formula">z = w · x + b = 3·1 + 4·2 + 1</div>
-      <ol class="options" type="A">
-        <li>8</li>
-        <li>10</li>
-        <li>12</li>
-        <li>14</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
+  preguntas.forEach((_, i) => {
+    const radios = document.querySelectorAll(`input[name="pregunta${i}"]`);
+    radios.forEach(radio => {
+      radio.checked = false;
+      radio.disabled = false;
+    });
 
-    <section class="question">
-      <h3>24. Si z = -5 y usamos ReLU, la salida es:</h3>
-      <ol class="options" type="A">
-        <li>-5</li>
-        <li>0</li>
-        <li>5</li>
-        <li>1</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
+    const feedback = document.getElementById(`feedback${i}`);
+    feedback.style.display = "none";
+    feedback.textContent = "";
+  });
+}
+</script>
 
-    <section class="question">
-      <h3>25. ¿Cuál es el valor de la sigmoide en x = 0?</h3>
-      <ol class="options" type="A">
-        <li>0</li>
-        <li>1</li>
-        <li>0.5</li>
-        <li>-0.5</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
-
-    <section class="question">
-      <h3>26. Si el gradiente vale 0:</h3>
-      <ol class="options" type="A">
-        <li>Siempre estamos en el mínimo global.</li>
-        <li>Los pesos dejan de actualizarse temporalmente.</li>
-        <li>La red explota.</li>
-        <li>La learning rate aumenta.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
-
-    <section class="question">
-      <h3>27. Si un modelo tiene muy poco error en entrenamiento y mucho error en test:</h3>
-      <ol class="options" type="A">
-        <li>Underfitting.</li>
-        <li>Buen ajuste.</li>
-        <li>Overfitting.</li>
-        <li>Normalización.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> C</p></details>
-    </section>
-
-    <section class="question">
-      <h3>28. ¿Qué hardware impulsó el deep learning moderno?</h3>
-      <ol class="options" type="A">
-        <li>CPUs antiguas.</li>
-        <li>GPUs.</li>
-        <li>Discos duros SSD.</li>
-        <li>Routers.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
-
-    <section class="question">
-      <h3>29. Matemáticamente, una red neuronal puede verse como:</h3>
-      <ol class="options" type="A">
-        <li>Una única recta.</li>
-        <li>Una composición de funciones.</li>
-        <li>Un algoritmo sin álgebra.</li>
-        <li>Un sistema no matemático.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
-
-    <section class="question">
-      <h3>30. ¿Qué rama matemática es especialmente importante en deep learning?</h3>
-      <ol class="options" type="A">
-        <li>Topología algebraica únicamente.</li>
-        <li>Álgebra lineal.</li>
-        <li>Geometría euclídea clásica exclusivamente.</li>
-        <li>Teoría de números elemental.</li>
-      </ol>
-      <details><summary>Ver respuesta</summary><p><strong>Respuesta correcta:</strong> B</p></details>
-    </section>
-  </main>
-
-  <footer>
-    Cuestionario de estudio - Matemáticas para IA
-  </footer>
 </body>
 </html>
